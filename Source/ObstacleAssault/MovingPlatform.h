@@ -28,4 +28,7 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	int32 MyX = 0;
+
+	UPROPERTY(EditAnywhere)
+	float MoveSpeed = 1;
 };
