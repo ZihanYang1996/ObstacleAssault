@@ -16,7 +16,9 @@ void AMovingPlatform::BeginPlay()
 {
 	Super::BeginPlay();
 
-	APlusB = InputA + InputB;
+	MyX = MyVector.X;
+
+	UE_LOG(LogTemp, Warning, TEXT("X: %i"), MyX)
 	
 }
 
