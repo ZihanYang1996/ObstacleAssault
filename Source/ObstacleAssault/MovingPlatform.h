@@ -10,8 +10,8 @@ UCLASS()
 class OBSTACLEASSAULT_API AMovingPlatform : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	AMovingPlatform();
 
@@ -19,8 +19,19 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY(EditAnywhere)
+	int32 APlusB{};
+
+	UPROPERTY(EditAnywhere)
+	int32 InputA{};
+
+	UPROPERTY(EditAnywhere)
+	int32 InputB{};
+
+	UPROPERTY(EditAnywhere)
+	bool MyBool{false};
 };
