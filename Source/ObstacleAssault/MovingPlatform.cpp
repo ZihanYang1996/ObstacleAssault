@@ -18,7 +18,8 @@ void AMovingPlatform::BeginPlay()
 {
 	Super::BeginPlay();
 
-	CurrentLocation = GetActorLocation();
+	StartLocation = GetActorLocation();
+	EndLocation = StartLocation + FVector(0, 0, 500);
 
 	// Get the player actor using tag
 	TArray<AActor*> FoundActors;
@@ -36,13 +37,26 @@ void AMovingPlatform::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	// Move the platform
-	CurrentLocation += MoveSpeedVector * DeltaTime;
-	SetActorLocation(CurrentLocation);
-
+	CurrentLocation = GetActorLocation();
 	DistanceFromPlayer = FVector::Dist(PlayerActor->GetActorLocation(), CurrentLocation);
 	// UE_LOG(LogTemp, Warning, TEXT("Distance from player: %s"), *PlayerActor->GetActorLocation().ToString());
 	// UE_LOG(LogTemp, Warning, TEXT("Distance from player: %f"), DistanceFromPlayer);
-
+	// Move the platform
+	if (DistanceFromPlayer < MaxDistanceFromPlayer)
+	{
+		if (MovingForward && CurrentLocation.Z < EndLocation.Z)
+		{
+			CurrentLocation += MoveSpeedVector * DeltaTime;
+		}
+		else if (!MovingForward && CurrentLocation.Z > StartLocation.Z)
+		{
+			CurrentLocation -= MoveSpeedVector * DeltaTime;
+		}
+		else
+		{
+			MovingForward = !MovingForward;
+		}
+		SetActorLocation(CurrentLocation);
+	}
 }
 

@@ -24,12 +24,19 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	FVector CurrentLocation;
+	FVector StartLocation;
+	FVector EndLocation;
+	UPROPERTY(VisibleAnywhere, Category="Moving Platform Variables")
+	bool MovingForward = true;
 
 	UPROPERTY(EditAnywhere, Category="Moving Platform Variables")
-	FVector MoveSpeedVector = FVector(0, 0, 10);
+	FVector MoveSpeedVector = FVector(0, 0, 100);
 
 	UPROPERTY(VisibleAnywhere, Category="Moving Platform Variables")
 	float DistanceFromPlayer = 0.0f;
+
+	UPROPERTY(EditAnywhere, Category="Moving Platform Variables")
+	float MaxDistanceFromPlayer = 1000.0f;
 
 	// UPROPERTY(EditAnywhere, Category="Moving Platform Variables")  // Directly setting the player actor in the editor
 	AActor* PlayerActor;
