@@ -16,11 +16,7 @@ void AMovingPlatform::BeginPlay()
 {
 	Super::BeginPlay();
 
-	MyX = MyVector.X;
-
-	UE_LOG(LogTemp, Warning, TEXT("X: %i"), MyX)
-
-	SetActorLocation(MyVector);
+	CurrentLocation = GetActorLocation();
 	
 }
 
@@ -29,7 +25,8 @@ void AMovingPlatform::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	MyVector.Z = MyVector.Z + MoveSpeed * DeltaTime;
-	SetActorLocation(MyVector);
+	
+	CurrentLocation.Z += MoveSpeed * DeltaTime;
+	SetActorLocation(CurrentLocation);
 }
 
