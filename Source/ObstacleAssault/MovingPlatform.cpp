@@ -3,6 +3,8 @@
 
 #include "MovingPlatform.h"
 
+#include "Kismet/GameplayStatics.h"
+
 // Sets default values
 AMovingPlatform::AMovingPlatform()
 {
@@ -17,6 +19,15 @@ void AMovingPlatform::BeginPlay()
 	Super::BeginPlay();
 
 	CurrentLocation = GetActorLocation();
+
+	// Get the player actor using tag
+	TArray<AActor*> FoundActors;
+	UGameplayStatics::GetAllActorsWithTag(GetWorld(), FName("Player"), FoundActors);
+	if (FoundActors.Num() > 0)
+	{
+		PlayerActor = FoundActors[0];
+	}
+	
 	
 }
 
@@ -25,8 +36,13 @@ void AMovingPlatform::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	
-	CurrentLocation.Z += MoveSpeed * DeltaTime;
+	// Move the platform
+	CurrentLocation += MoveSpeedVector * DeltaTime;
 	SetActorLocation(CurrentLocation);
+
+	DistanceFromPlayer = FVector::Dist(PlayerActor->GetActorLocation(), CurrentLocation);
+	// UE_LOG(LogTemp, Warning, TEXT("Distance from player: %s"), *PlayerActor->GetActorLocation().ToString());
+	// UE_LOG(LogTemp, Warning, TEXT("Distance from player: %f"), DistanceFromPlayer);
+
 }
 

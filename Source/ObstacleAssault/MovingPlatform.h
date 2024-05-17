@@ -25,6 +25,12 @@ public:
 
 	FVector CurrentLocation;
 
-	UPROPERTY(EditAnywhere)
-	float MoveSpeed = 10;
+	UPROPERTY(EditAnywhere, Category="Moving Platform Variables")
+	FVector MoveSpeedVector = FVector(0, 0, 10);
+
+	UPROPERTY(VisibleAnywhere, Category="Moving Platform Variables")
+	float DistanceFromPlayer = 0.0f;
+
+	// UPROPERTY(EditAnywhere, Category="Moving Platform Variables")  // Directly setting the player actor in the editor
+	AActor* PlayerActor;
 };
