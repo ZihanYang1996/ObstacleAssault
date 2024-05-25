@@ -68,7 +68,8 @@ void UForcingCollisions::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AAc
 		return;
 	}
 	NumOverlapping++;
-	UE_LOG(LogTemp, Warning, TEXT("Overlap Begin with: %s, NumOverlappingL %d"), *OtherActor->GetActorLabel(), NumOverlapping);
+	UE_LOG(LogTemp, Warning, TEXT("Overlap Begin with: %s, NumOverlappingL %d"), *OtherActor->GetActorLabel(),
+	       NumOverlapping);
 }
 
 void UForcingCollisions::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
@@ -79,7 +80,8 @@ void UForcingCollisions::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActo
 		return;
 	}
 	NumOverlapping -= NumOverlapping > 0 ? 1 : 0;
-	UE_LOG(LogTemp, Warning, TEXT("Overlap End with: %s, NumOverlappingL %d"), *OtherActor->GetActorLabel(), NumOverlapping);
+	UE_LOG(LogTemp, Warning, TEXT("Overlap End with: %s, NumOverlappingL %d"), *OtherActor->GetActorLabel(),
+	       NumOverlapping);
 }
 
 void UForcingCollisions::ShakeCharacter()
@@ -91,14 +93,10 @@ void UForcingCollisions::ShakeCharacter()
 
 	FHitResult HitResult;
 	bool bMoved = Owner->GetMovementComponent()->MoveUpdatedComponent(FVector(2.0f, 0.0f, 0.0f),
-	                                                                  Owner->GetMovementComponent()->
-	                                                                         UpdatedComponent->
-	                                                                         GetComponentRotation(), true, &HitResult,
+	                                                                  Owner->GetActorRotation(), true, &HitResult,
 	                                                                  ETeleportType::None);
 	bMoved = Owner->GetMovementComponent()->MoveUpdatedComponent(FVector(-2.0f, 0.0f, 0.0f),
-	                                                             Owner->GetMovementComponent()->
-	                                                                    UpdatedComponent->
-	                                                                    GetComponentRotation(), true, &HitResult,
+	                                                             Owner->GetActorRotation(), true, &HitResult,
 	                                                             ETeleportType::None);
 	// if (bMoved)
 	// {
