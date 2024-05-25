@@ -19,17 +19,7 @@ void AMovingPlatform::BeginPlay()
 	Super::BeginPlay();
 
 	StartLocation = GetActorLocation();
-	EndLocation = StartLocation + FVector(0, 0, 500);
-
-	// Get the player actor using tag
-	TArray<AActor*> FoundActors;
-	UGameplayStatics::GetAllActorsWithTag(GetWorld(), FName("Player"), FoundActors);
-	if (FoundActors.Num() > 0)
-	{
-		PlayerActor = FoundActors[0];
-	}
-	
-	
+	EndLocation = StartLocation + EndLocationOffset;	
 }
 
 // Called every frame
@@ -37,26 +27,19 @@ void AMovingPlatform::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	// Calculate new location
 	CurrentLocation = GetActorLocation();
-	DistanceFromPlayer = FVector::Dist(PlayerActor->GetActorLocation(), CurrentLocation);
-	// UE_LOG(LogTemp, Warning, TEXT("Distance from player: %s"), *PlayerActor->GetActorLocation().ToString());
-	// UE_LOG(LogTemp, Warning, TEXT("Distance from player: %f"), DistanceFromPlayer);
+	FVector TargetLocation = MovingForward ? EndLocation : StartLocation;
+	FVector Direction = (TargetLocation - CurrentLocation).GetSafeNormal();
+	FVector NewLocation = CurrentLocation + Direction * MoveSpeedVector * DeltaTime;
+	
 	// Move the platform
-	if (DistanceFromPlayer < MaxDistanceFromPlayer)
+	SetActorLocation(NewLocation);
+
+	// If the platform has reached the target location, switch direction
+	if (FVector::DistSquared(NewLocation, TargetLocation) < 1.0f)
 	{
-		if (MovingForward && CurrentLocation.Z < EndLocation.Z)
-		{
-			CurrentLocation += MoveSpeedVector * DeltaTime;
-		}
-		else if (!MovingForward && CurrentLocation.Z > StartLocation.Z)
-		{
-			CurrentLocation -= MoveSpeedVector * DeltaTime;
-		}
-		else
-		{
-			MovingForward = !MovingForward;
-		}
-		SetActorLocation(CurrentLocation);
+		MovingForward = !MovingForward;
 	}
 }
 
