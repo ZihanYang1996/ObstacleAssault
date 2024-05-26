@@ -32,6 +32,9 @@ void AMovingPlatform::Tick(float DeltaTime)
 	FVector TargetLocation = MovingForward ? EndLocation : StartLocation;
 	FVector Direction = (TargetLocation - CurrentLocation).GetSafeNormal();
 	FVector NewLocation = CurrentLocation + Direction * MoveSpeedVector * DeltaTime;
+
+	// Add rotation
+	AddActorLocalRotation(RotationSpeed * DeltaTime);
 	
 	// Move the platform
 	SetActorLocation(NewLocation);

@@ -33,6 +33,9 @@ public:
 	float MoveSpeedVector = 50;
 
 	UPROPERTY(EditAnywhere, Category="Moving Platform Variables")
+	FRotator RotationSpeed = FRotator(0, 90, 0);
+
+	UPROPERTY(EditAnywhere, Category="Moving Platform Variables")
 	FVector EndLocationOffset = FVector(500, 0, 0);
 	
 };

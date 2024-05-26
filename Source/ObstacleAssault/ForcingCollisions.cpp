@@ -84,7 +84,7 @@ void UForcingCollisions::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActo
 	       NumOverlapping);
 }
 
-void UForcingCollisions::ShakeCharacter()
+void UForcingCollisions::ShakeCharacter() const
 {
 	if (NumOverlapping == 0)
 	{
